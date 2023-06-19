@@ -6,13 +6,13 @@ public class MainMenuController : MonoBehaviour
 {
     public void Gioca()
     {
-        SceneManager.LoadScene("LancioDadi");
         List<string> names = new List<string>
         {
-            "Giocatore 1",
-            "Giocatore 2"
+            "Frisco",
+            "Filippo"
         };
         PlayerPoints.CreatePlayers(names);
         GameController.contatore = 3;
+        SceneManager.LoadScene("Punteggio");
     }
 }

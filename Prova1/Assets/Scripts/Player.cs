@@ -13,7 +13,7 @@ namespace System.Runtime.CompilerServices
 
 public class Player
 {
-    public static int playerNumber = 0;
+    private static int playerNumber = 0;
     private int _idPlayer;
     public int IdPlayer
     {

@@ -9,13 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 9362d517a9719cc4d8a0878987f61549
   - enabled: 1
+    path: Assets/Scenes/Punteggio.unity
+    guid: 6c064917bed80af4d849a6eb96fbf0ee
+  - enabled: 1
     path: Assets/Scenes/LancioDadi.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/SceltaPunteggio.unity
     guid: 27c4235e368dd554ea3e23710424db10
-  - enabled: 1
-    path: Assets/Scenes/Punteggio.unity
-    guid: 6c064917bed80af4d849a6eb96fbf0ee
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 433c7b1279dfd9b4782490776117a532, type: 2}

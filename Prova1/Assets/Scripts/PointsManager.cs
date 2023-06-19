@@ -227,7 +227,7 @@ public class PointsManager : MonoBehaviour
         GameController.contatore = 3;
         PlayerPoints.NextPlayer();
         print(currentPlayer);
-        SceneManager.LoadScene("LancioDadi");
+        SceneManager.LoadScene("Punteggio");
         // vai alla schermata dei punti oppure rilancia i dadi per ora
     }
     public void VaiASchermataSacrifica()

@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject[] dadiArray;
     public static int contatore = 3;
-    private new SpriteRenderer renderer;
+    private SpriteRenderer m_renderer;
     private Color colore;
     [SerializeField] private bool dadiAbilitati = true;
     [SerializeField] private GameObject inputController;
@@ -89,16 +89,16 @@ public class GameController : MonoBehaviour
             dadiArray[i].GetComponent<DiceRandomizer>().enabled = false;
             if (contatore != 0)
             {
-                renderer = dadiArray[i].GetComponent<SpriteRenderer>();
-                colore = renderer.color;
+                m_renderer = dadiArray[i].GetComponent<SpriteRenderer>();
+                colore = m_renderer.color;
                 colore.a = .5f;
                 dadiArray[i].GetComponent<SpriteRenderer>().color = colore;
                 dadiArray[i].GetComponent<Dice>().Deselected();
             }
             else
             {
-                renderer = dadiArray[i].GetComponent<SpriteRenderer>();
-                colore = renderer.color;
+                m_renderer = dadiArray[i].GetComponent<SpriteRenderer>();
+                colore = m_renderer.color;
                 colore.a = 1f;
                 dadiArray[i].GetComponent<SpriteRenderer>().color = colore;
                 dadiArray[i].GetComponent<Dice>().Deselected();
@@ -115,8 +115,8 @@ public class GameController : MonoBehaviour
         //bottoneLanciare.interactable = true;
         for (int i = 0; i < dadiArray.Length; i++)
         {
-            renderer = dadiArray[i].GetComponent<SpriteRenderer>();
-            colore = renderer.color;
+            m_renderer = dadiArray[i].GetComponent<SpriteRenderer>();
+            colore = m_renderer.color;
             if (colore.a == 1f)
             {
                 dadiArray[i].GetComponent<DiceRandomizer>().enabled = true;

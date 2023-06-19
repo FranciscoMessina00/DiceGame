@@ -8,7 +8,7 @@ public class DiceSelected : MonoBehaviour
 {
     private Camera _mainCamera;
     public GameObject diceObject;
-    private new SpriteRenderer renderer;
+    private SpriteRenderer m_renderer;
     private Color colore;
     private PlayerInput input;
     public bool selected = false;
@@ -51,9 +51,9 @@ public class DiceSelected : MonoBehaviour
     }
     private void SwitchState()
     {
-        renderer = diceObject.GetComponent<SpriteRenderer>();
+        m_renderer = diceObject.GetComponent<SpriteRenderer>();
         Dice dado = diceObject.GetComponent<Dice>();
-        colore = renderer.color;
+        colore = m_renderer.color;
         if (colore.a == 1f)
         {
             colore.a = .5f;
