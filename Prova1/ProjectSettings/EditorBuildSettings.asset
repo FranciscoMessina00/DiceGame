@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 9362d517a9719cc4d8a0878987f61549
   - enabled: 1
+    path: Assets/Scenes/IniziaPartita.unity
+    guid: b0316cbdeebaae94dae589d0294e4fd1
+  - enabled: 1
     path: Assets/Scenes/Punteggio.unity
     guid: 6c064917bed80af4d849a6eb96fbf0ee
   - enabled: 1

@@ -18,7 +18,7 @@ public class WinnerController : MonoBehaviour
         // set testo per mostrare la classiica generale
         GameObject textClassifica = GameObject.Find("Classifica");
         TMP_Text meshClassifica = textClassifica.GetComponent<TMP_Text>();
-        int i = 0;
+        int i = 1;
         string classificaTesto = "";
         foreach(KeyValuePair<string, int> player in classifica)
         {

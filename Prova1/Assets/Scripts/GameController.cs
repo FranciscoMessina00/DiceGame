@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         inputPlayer = new PlayerInput();
-        //inputController.GetComponent<DiceSelected>().enabled = true;
+        inputController.GetComponent<DiceSelected>().enabled = false;
         inputPlayer.Disable();
         lanciaBotton.SetActive(false);
         avantiBotton.SetActive(false);
