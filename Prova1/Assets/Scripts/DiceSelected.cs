@@ -19,8 +19,8 @@ public class DiceSelected : MonoBehaviour
     }
     public void Start()
     {
-        
-        input.Gameplay.Click.started += ctx => StartTouch(ctx);
+        _mainCamera = Camera.main;
+        // input.Gameplay.Click.started += ctx => StartTouch(ctx);
     }
     //public void OnClick(InputAction.CallbackContext context)
     //{
@@ -40,7 +40,7 @@ public class DiceSelected : MonoBehaviour
     {
         input.Disable();
     }
-    private void StartTouch(InputAction.CallbackContext context)
+    public void OnClick(InputAction.CallbackContext context)
     {
         if (!context.started) return;
         Vector3 v3 = input.Gameplay.ClickPosition.ReadValue<Vector2>();

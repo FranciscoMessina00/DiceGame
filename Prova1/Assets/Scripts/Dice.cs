@@ -5,7 +5,7 @@ using UnityEngine;
 public class Dice : MonoBehaviour
 {
     public int face = 1;
-    public string nameImage = "Dadi_1";
+    public string nameImage = "Dadi_0";
     private readonly System.Random rand = new System.Random();
     public bool selected = false;
     public int RandomFace()
@@ -14,10 +14,10 @@ public class Dice : MonoBehaviour
         SetParam(setFace);
         return setFace;
     }
-    private void SetParam(int setFace)
+    public void SetParam(int setFace)
     {
         this.face = setFace + 1;
-        this.nameImage = "Dice_" + setFace.ToString();
+        this.nameImage = "Dadi_" + setFace.ToString();
     }
     public void Selected()
     {

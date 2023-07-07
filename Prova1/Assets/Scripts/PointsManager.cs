@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 using static UnityEngine.ParticleSystem;
 
@@ -15,18 +16,30 @@ public class PointsManager : MonoBehaviour
     public GameObject bottonManagerObj;
     public ButtonsManagerPoints bmp;
     Player currentPlayer;
+    public bool sacrifica;
+    public static bool inPunteggio = false;
     // Start is called before the first frame update
     void Start()
     {
         currentPlayer = PlayerPoints.CurrentPlayer();
         bmp = bottonManagerObj.GetComponent<ButtonsManagerPoints>();
         conteggioNumeri = new int[] { 0, 0, 0, 0, 0, 0 };
-        dadiUsciti = GameController.numeri;
+        dadiUsciti = new List<int>(GameController.numeri).ToArray();
+        System.Array.Sort(dadiUsciti);
         //dadiUsciti = new int[] { 6, 6, 6, 6, 6 };
         string testo = GenerateText(dadiUsciti);
         TMP_Text mesh = text.GetComponent<TMP_Text>();
         mesh.SetText("I dadi usciti sono:\n"+testo+"\nCosa scegli?");
+        //popola conteggioNumeri
+        foreach (int numero in dadiUsciti)
+        {
+            PopolaConteggioNumeri(numero);
+        }
         CalcolaGiochi();
+        sacrifica = false;
+        inPunteggio = false;
+        GameObject pulsanteSacrifica = GameObject.Find("Sacrifica");
+        pulsanteSacrifica.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 
     // Update is called once per frame
@@ -45,11 +58,12 @@ public class PointsManager : MonoBehaviour
     }
     private void CalcolaGiochi()
     {
-        //popola conteggioNumeri
-        foreach(int numero in dadiUsciti)
+        //disabilitare tutti i pulsanti
+        for(int i = 0; i < 11; i++)
         {
-            PopolaConteggioNumeri(numero);
+            bmp.DisableButtons(i);
         }
+
         //check giocate dei numeri
         for (int i=0; i<conteggioNumeri.Length; i++)
         {
@@ -68,19 +82,19 @@ public class PointsManager : MonoBehaviour
             bmp.SetButtons(6);
             Debug.Log("Scala");
         }
-        else if ( Full() && currentPlayer.points["Full"] == 0 )
+        if ( Full() && currentPlayer.points["Full"] == 0 )
         {
             //abilita full
             bmp.SetButtons(7);
             Debug.Log("Full");
         }
-        else if ( Poker() && currentPlayer.points["Poker"] == 0 )
+        if ( Poker() && currentPlayer.points["Poker"] == 0 )
         {
             //abilita poker
             bmp.SetButtons(8);
             Debug.Log("Poker");
         }
-        else if ( Generala() )
+        if ( Generala() && (currentPlayer.points["Doppia"] == 0 || currentPlayer.points["Generala"] == 0))
         {
             if (currentPlayer.GeneralaFatta)
             {
@@ -89,11 +103,27 @@ public class PointsManager : MonoBehaviour
             }
             else
             {
-                bmp.SetButtons(9);
-                Debug.Log("Generala");
+                // se ho cliccato sacrifica, sono qui perché non ho fatto la generala
+                if (sacrifica)
+                {
+                    if (currentPlayer.points["Doppia"] == 0)
+                    {
+                        bmp.SetButtons(10);
+                        Debug.Log("Doppia");
+                    }
+                    else
+                    {
+                        bmp.SetButtons(9);
+                        Debug.Log("Generala");
+                    }
+                }
+                else
+                {
+                    bmp.SetButtons(9);
+                    Debug.Log("Generala");
+                }
+                
             }
-            // if(generalaFatta) {abilita doppia generala}
-            // else{abilita generala}
             
         }
     }
@@ -123,7 +153,7 @@ public class PointsManager : MonoBehaviour
     }
     private bool GiocataNumeri(int uscita)
     {
-        if (uscita != 0)
+        if (uscita != 0 || sacrifica)
         {
             return true;
         }
@@ -134,7 +164,7 @@ public class PointsManager : MonoBehaviour
     }
     private bool Scala()
     {
-        if (Enumerable.SequenceEqual(conteggioNumeri, new int[] { 1, 1, 1, 1, 1, 0 })  || Enumerable.SequenceEqual(conteggioNumeri, new int[] { 0, 1, 1, 1, 1, 1 }))
+        if (sacrifica || Enumerable.SequenceEqual(conteggioNumeri, new int[] { 1, 1, 1, 1, 1, 0 })  || Enumerable.SequenceEqual(conteggioNumeri, new int[] { 0, 1, 1, 1, 1, 1 }))
         {
             return true;
         }
@@ -146,7 +176,8 @@ public class PointsManager : MonoBehaviour
     }
     private bool Full()
     {
-        if (conteggioNumeri.Contains(2) && conteggioNumeri.Contains(3))
+        Debug.Log("Entrato dentro full");
+        if ( sacrifica || (conteggioNumeri.Contains(2) && conteggioNumeri.Contains(3)) )
         {
             return true;
         }
@@ -157,7 +188,8 @@ public class PointsManager : MonoBehaviour
     }
     private bool Poker()
     {
-        if (conteggioNumeri.Contains(4))
+        Debug.Log("Entrato dentro poker");
+        if ( sacrifica || conteggioNumeri.Contains(4) )
         {
             return true;
         }
@@ -168,7 +200,7 @@ public class PointsManager : MonoBehaviour
     }
     private bool Generala()
     {
-        if (conteggioNumeri.Contains(5))
+        if ( conteggioNumeri.Contains(5) || sacrifica )
         {
             return true;
         }
@@ -183,28 +215,57 @@ public class PointsManager : MonoBehaviour
         int index = facciaDado - 1;
         int puntiMoltiplicati = facciaDado * conteggioNumeri[index];
         //manda puntiMoltiplicati e puntoSingolo in formato stringa per segnare punti
-        PlayerPoints.SetPointsToPlayer(facciaDado.ToString(), puntiMoltiplicati);
+        if (sacrifica)
+        {
+            PlayerPoints.SetPointsToPlayer(facciaDado.ToString());
+        }
+        else
+        {
+            PlayerPoints.SetPointsToPlayer(facciaDado.ToString(), puntiMoltiplicati);
+        }
+        
         VaiASchermataPunti();
     }
     public void SetPointsScala()
     {
         int points = 20;
         points = CheckFirstTry(points);
-        PlayerPoints.SetPointsToPlayer("Scala", points);
+        if (sacrifica)
+        {
+            PlayerPoints.SetPointsToPlayer("Scala");
+        }
+        else
+        {
+            PlayerPoints.SetPointsToPlayer("Scala", points);
+        }
         VaiASchermataPunti();
     }
     public void SetPointsFull()
     {
         int points = 30;
         points = CheckFirstTry(points);
-        PlayerPoints.SetPointsToPlayer("Full", points);
+        if (sacrifica)
+        {
+            PlayerPoints.SetPointsToPlayer("Full");
+        }
+        else
+        {
+            PlayerPoints.SetPointsToPlayer("Full", points);
+        }
         VaiASchermataPunti();
     }
     public void SetPointsPoker()
     {
         int points = 40;
         points = CheckFirstTry(points);
-        PlayerPoints.SetPointsToPlayer("Poker", points);
+        if (sacrifica)
+        {
+            PlayerPoints.SetPointsToPlayer("Poker");
+        }
+        else
+        {
+            PlayerPoints.SetPointsToPlayer("Poker", points);
+        }
         VaiASchermataPunti();
     }
     public void SetPointsGenerala()
@@ -213,32 +274,73 @@ public class PointsManager : MonoBehaviour
         points = CheckFirstTry(points);
         if (currentPlayer.GeneralaFatta)
         {
-            PlayerPoints.SetPointsToPlayer("Doppia", points);
+            if (sacrifica)
+            {
+                PlayerPoints.SetPointsToPlayer("Doppia");
+            }
+            else
+            {
+                PlayerPoints.SetPointsToPlayer("Doppia", points);
+            }
         }
         else
         {
-            PlayerPoints.SetPointsToPlayer("Generala", points);
-            currentPlayer.GeneralaFatta = true;
+            if (sacrifica)
+            {
+                if (currentPlayer.points["Doppia"] == 0)
+                {
+                    PlayerPoints.SetPointsToPlayer("Doppia");
+                }
+                else
+                {
+                    PlayerPoints.SetPointsToPlayer("Generala");
+                }
+            }
+            else
+            {
+                PlayerPoints.SetPointsToPlayer("Generala", points);
+                currentPlayer.GeneralaFatta = true;
+            }
         }
         VaiASchermataPunti();
     }
     public void VaiASchermataPunti()
     {
+        GameController.midTurno = false;
         GameController.contatore = 3;
         PlayerPoints.NextPlayer();
         print(currentPlayer);
         SceneManager.LoadScene("Punteggio");
         // vai alla schermata dei punti oppure rilancia i dadi per ora
     }
-    public void VaiASchermataSacrifica()
+    public void MidTurnoSchermataPunti()
     {
-        // carica la stessa schermata dei pulsanti ma tutti abilitati tranne
-        // quelli che hanno un punteggio diverso da 0
+        inPunteggio = true;
+        SceneManager.LoadScene("Punteggio");
     }
-    public void Sacrifica(string gioco)
+    public void IndietroSchermata()
+    {
+        SceneManager.LoadScene("LancioDadi");
+    }
+    public void SwitchPulsantiSacrifica()
+    {
+        sacrifica = !sacrifica;
+        if (sacrifica)
+        {
+            GameObject pulsanteSacrifica = GameObject.Find("Sacrifica");
+            pulsanteSacrifica.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
+        }
+        else
+        {
+            GameObject pulsanteSacrifica = GameObject.Find("Sacrifica");
+            pulsanteSacrifica.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+        CalcolaGiochi();
+    }
+    /*public void Sacrifica(string gioco)
     {
         PlayerPoints.SetPointsToPlayer(gioco);
-    }
+    }*/
     private int CheckFirstTry(int points)
     {
         if (GameController.contatore == 2)

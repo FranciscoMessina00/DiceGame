@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class DiceRandomizer : MonoBehaviour
 {
-    private readonly System.Random rand = new System.Random();
-    public int diceNumber;
     public Dice dice;
     public SpriteRenderer spriteRenderer;
     public Sprite[] spriteArray;
-
 
     private void Awake()
     {
@@ -20,8 +17,7 @@ public class DiceRandomizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        diceNumber = rand.Next(0, 6);
-        ChangeSprite(diceNumber);
+        ChangeSprite(dice.face - 1);
         StartCoroutine("DoCheck");
     }
 
@@ -29,7 +25,7 @@ public class DiceRandomizer : MonoBehaviour
     //void Update()
     //{
     //}
-    void ChangeSprite(int number)
+    public void ChangeSprite(int number)
     {
         spriteRenderer.sprite = spriteArray[number];
     }
@@ -43,7 +39,6 @@ public class DiceRandomizer : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     ChangeSprite(dice.RandomFace());
-                    diceNumber = dice.face;
                 }
             }
             yield return null;

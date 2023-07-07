@@ -23,20 +23,39 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject avantiBotton;
     [SerializeField] private GameObject testo;
     [SerializeField] private GameObject tentativiRimasti;
+    [SerializeField] private GameObject vediPunteggioButton;
     private bool avanti;
     public static int[] numeri = new int[] { 1, 1, 1, 1, 1 };
+    // public static int[] tempDiceFaces;
+    [SerializeField] public static bool midTurno = false;
     public PlayerInput inputPlayer;
     UnityEngine.UI.Button bottoneLanciare;
     private void Awake()
     {
         inputPlayer = new PlayerInput();
-        inputController.GetComponent<DiceSelected>().enabled = true;
+        //inputController.GetComponent<DiceSelected>().enabled = true;
         inputPlayer.Disable();
         lanciaBotton.SetActive(false);
         avantiBotton.SetActive(false);
+        vediPunteggioButton = GameObject.Find("Vedi punteggio");
+        vediPunteggioButton.SetActive(false);
         testo.SetActive(true);
         avanti = false;
         bottoneLanciare = lanciaBotton.GetComponent<UnityEngine.UI.Button>();
+        if (midTurno)
+        {
+            DisableDice();
+            if (contatore != 0)
+            {
+                inputPlayer.Enable();
+                inputController.GetComponent<DiceSelected>().enabled = true;
+            }
+            if (contatore == 0)
+            {
+                inputPlayer.Disable();
+                inputController.GetComponent<DiceSelected>().enabled = false;
+            }
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -46,6 +65,7 @@ public class GameController : MonoBehaviour
         mesh = testo.GetComponent<TMP_Text>();
         mesh.SetText(PlayerPoints.CurrentPlayer().PlayerName + ", tieni premuto per lanciare i dadi");
         Debug.Log(PlayerPoints.CurrentPlayer().PlayerName);
+        RecoverFaces();
     }
 
     // Update is called once per frame
@@ -82,6 +102,7 @@ public class GameController : MonoBehaviour
     {
         lanciaBotton.SetActive(true);
         avantiBotton.SetActive(true);
+        vediPunteggioButton.SetActive(true);
         testo.SetActive(false);
         bottoneLanciare.interactable = false;
         for (int i = 0; i < dadiArray.Length; i++)
@@ -112,18 +133,19 @@ public class GameController : MonoBehaviour
         testo.SetActive(true);
         lanciaBotton.SetActive(false);
         avantiBotton.SetActive(false);
+        vediPunteggioButton.SetActive(false);
         //bottoneLanciare.interactable = true;
+        Dice dado;
         for (int i = 0; i < dadiArray.Length; i++)
         {
-            m_renderer = dadiArray[i].GetComponent<SpriteRenderer>();
-            colore = m_renderer.color;
-            if (colore.a == 1f)
+            dado = dadiArray[i].GetComponent<Dice>();
+            if (dado.selected)
             {
                 dadiArray[i].GetComponent<DiceRandomizer>().enabled = true;
             }
         }
-        inputPlayer.Enable();
-        inputController.GetComponent<DiceSelected>().enabled = true;
+        inputPlayer.Disable();
+        inputController.GetComponent<DiceSelected>().enabled = false;
         avanti = true;
     }
     public void SaveNumbersArray()
@@ -133,18 +155,13 @@ public class GameController : MonoBehaviour
             Dice dado = dadiArray[i].GetComponent<Dice>();
             numeri[i] = dado.face;
         }
-        System.Array.Sort(numeri);
-    }
-    public void PrintArray()
-    {
-        for (int i = 0; i < dadiArray.Length; i++)
-        {
-            System.Array.Sort(numeri);
-            print(numeri[i]);
-        }
     }
     public void NextScene()
     {
+        if (contatore != 0)
+        {
+            midTurno = true;
+        }
         SceneManager.LoadScene("SceltaPunteggio");
     }
     public void TogliTentativo()
@@ -168,6 +185,35 @@ public class GameController : MonoBehaviour
         else
         {
             bottoneLanciare.interactable = false;
+        }
+    }
+    public void VediPunteggio()
+    {
+        midTurno = true;
+        for (int i = 1; i <= 5; i++)
+        {
+            Debug.Log(numeri[i - 1]);
+        }
+        SceneManager.LoadScene("Punteggio");
+    }
+    private void RecoverFaces()
+    {
+        if (midTurno)
+        {
+            DiceRandomizer diceRandomizer;
+            Dice dadoFaccia;
+            midTurno = false;
+            string dadoName;
+            for (int i = 1; i <= 5; i++)
+            {
+                Debug.Log(numeri[i - 1]);
+                dadoName = "Dice_" + i.ToString();
+                GameObject dado = GameObject.Find(dadoName);
+                diceRandomizer = dado.GetComponent<DiceRandomizer>();
+                diceRandomizer.ChangeSprite(numeri[i - 1] - 1);
+                dadoFaccia = dado.GetComponent<Dice>();
+                dadoFaccia.SetParam(numeri[i - 1] - 1);
+            }
         }
     }
 }

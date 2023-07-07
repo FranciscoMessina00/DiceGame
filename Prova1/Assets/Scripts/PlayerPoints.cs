@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerPoints : MonoBehaviour
 {
+    public static int tiriTotali = 0;
     public static int currentPlayer = 0;
     public static List<Player> players = new List<Player>();
     public static void CreatePlayers(List<string> names)
@@ -39,6 +40,7 @@ public class PlayerPoints : MonoBehaviour
             currentPlayer = 0;
         }
         CurrentPlayer().IsCurrent = true;
+        tiriTotali++;
     }
     public static Player CurrentPlayer()
     {

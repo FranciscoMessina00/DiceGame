@@ -26,14 +26,38 @@ public class PointsVisualizer : MonoBehaviour
         viewPlayerInfo();
         GameObject lanciaDadiNomeObj = GameObject.Find("Lancia nome");
         TMP_Text lanciaDadiNome = lanciaDadiNomeObj.GetComponent<TMP_Text>();
-        lanciaDadiNome.text = "Tocca a " + currentPlayer.PlayerName;
+        if ( PointsManager.inPunteggio)
+        {
+            lanciaDadiNome.text = "Vai a scegliere il punteggio";
+        }
+        else
+        {
+            if (PlayerPoints.tiriTotali == 11 * PlayerPoints.players.Count)
+            {
+                lanciaDadiNome.text = "Dichiara vincitore!";
+            }
+            else
+            {
+                lanciaDadiNome.text = "Tocca a " + currentPlayer.PlayerName;
+            }
+        }
+        
+        
     }
     private string getPointsString(Player player)
     {
         string points = "";
         foreach(int point in player.points.Values)
         {
-            points += point.ToString() + "\n";
+            if (point == -1)
+            {
+                points += "-\n";
+            }
+            else
+            {
+                points += point.ToString() + "\n";
+            }
+            
         }
         points += player.TotalPoints().ToString();
         return points;
@@ -51,7 +75,7 @@ public class PointsVisualizer : MonoBehaviour
         }
         viewPlayerInfo();
     }
-    public void viewPlayerInfo()
+    private void viewPlayerInfo()
     {
         TMP_Text playerName = playerNameObject.GetComponent<TMP_Text>();
         TMP_Text points = pointsObj.GetComponent<TMP_Text>();
@@ -61,6 +85,20 @@ public class PointsVisualizer : MonoBehaviour
     }
     public void Lancia()
     {
-        SceneManager.LoadScene("LancioDadi");
+        if (PointsManager.inPunteggio)
+        {
+            SceneManager.LoadScene("SceltaPunteggio");
+        }
+        else
+        {
+            if (PlayerPoints.tiriTotali == 11 * PlayerPoints.players.Count)
+            {
+                SceneManager.LoadScene("Vincitore");
+            }
+            else
+            {
+                SceneManager.LoadScene("LancioDadi");
+            }
+        }
     }
 }
