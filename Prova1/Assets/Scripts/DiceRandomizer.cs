@@ -35,11 +35,11 @@ public class DiceRandomizer : MonoBehaviour
         {
             if (gameObject.GetComponent<DiceRandomizer>().enabled)
             {
-                yield return new WaitForSeconds(.05f);
                 if (Input.GetMouseButton(0))
                 {
                     ChangeSprite(dice.RandomFace());
                 }
+                yield return new WaitForSeconds(.05f);
             }
             yield return null;
         }

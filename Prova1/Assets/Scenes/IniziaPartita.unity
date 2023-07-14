@@ -1873,6 +1873,91 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1001 &1178444578
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2378317936091400375, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378317936091400375, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_TagString
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991494694831101254, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: sounds.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991494694831101254, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: sounds.Array.data[11].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d46439a8973b2c544b7e7a9f8e6a78d1, type: 3}
+    - target: {fileID: 6991494694831101254, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: sounds.Array.data[11].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991494694831101254, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: sounds.Array.data[11].name
+      value: soundtrack
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991494694831101254, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: sounds.Array.data[11].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991494694831101254, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: sounds.Array.data[11].volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603338390149337235, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 089662b25b0cbb341a7e5bcbc35447aa, type: 3}
 --- !u!1 &1258095044
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,6 +2292,7 @@ MonoBehaviour:
   inputBase: {fileID: 4456465410223125002, guid: 807cc0ee1cffbf3449bb611937eac178, type: 3}
   inputs: []
   names: []
+  audioManager: {fileID: 0}
 --- !u!4 &1833108520
 Transform:
   m_ObjectHideFlags: 0

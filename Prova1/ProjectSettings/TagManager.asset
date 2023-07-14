@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Dice
+  - AudioManager
   layers:
   - Default
   - TransparentFX

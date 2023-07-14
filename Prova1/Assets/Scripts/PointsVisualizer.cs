@@ -32,7 +32,7 @@ public class PointsVisualizer : MonoBehaviour
         }
         else
         {
-            if (PlayerPoints.tiriTotali == 11 * PlayerPoints.players.Count)
+            if (PlayerPoints.tiriTotali >= 11 * PlayerPoints.players.Count)
             {
                 lanciaDadiNome.text = "Dichiara vincitore!";
             }
@@ -91,7 +91,7 @@ public class PointsVisualizer : MonoBehaviour
         }
         else
         {
-            if (PlayerPoints.tiriTotali == 11 * PlayerPoints.players.Count)
+            if (PlayerPoints.tiriTotali >= 11 * PlayerPoints.players.Count)
             {
                 SceneManager.LoadScene("Vincitore");
             }

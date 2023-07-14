@@ -10,7 +10,7 @@ public class PlayerPoints : MonoBehaviour
     public static List<Player> players = new List<Player>();
     public static void CreatePlayers(List<string> names)
     {
-        players = new List<Player>();
+        players.Clear();
         foreach (string name in names)
         {
             Player player = new Player(name);

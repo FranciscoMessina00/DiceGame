@@ -18,6 +18,7 @@ public class PointsManager : MonoBehaviour
     Player currentPlayer;
     public bool sacrifica;
     public static bool inPunteggio = false;
+    public AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,8 @@ public class PointsManager : MonoBehaviour
         inPunteggio = false;
         GameObject pulsanteSacrifica = GameObject.Find("Sacrifica");
         pulsanteSacrifica.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
     }
 
     // Update is called once per frame
@@ -218,10 +221,12 @@ public class PointsManager : MonoBehaviour
         if (sacrifica)
         {
             PlayerPoints.SetPointsToPlayer(facciaDado.ToString());
+            audioManager.Play("sacrifica");
         }
         else
         {
             PlayerPoints.SetPointsToPlayer(facciaDado.ToString(), puntiMoltiplicati);
+            audioManager.Play(conteggioNumeri[index].ToString());
         }
         
         VaiASchermataPunti();
@@ -233,10 +238,12 @@ public class PointsManager : MonoBehaviour
         if (sacrifica)
         {
             PlayerPoints.SetPointsToPlayer("Scala");
+            audioManager.Play("sacrifica");
         }
         else
         {
             PlayerPoints.SetPointsToPlayer("Scala", points);
+            audioManager.Play("scala");
         }
         VaiASchermataPunti();
     }
@@ -247,10 +254,12 @@ public class PointsManager : MonoBehaviour
         if (sacrifica)
         {
             PlayerPoints.SetPointsToPlayer("Full");
+            audioManager.Play("sacrifica");
         }
         else
         {
             PlayerPoints.SetPointsToPlayer("Full", points);
+            audioManager.Play("full");
         }
         VaiASchermataPunti();
     }
@@ -261,10 +270,12 @@ public class PointsManager : MonoBehaviour
         if (sacrifica)
         {
             PlayerPoints.SetPointsToPlayer("Poker");
+            audioManager.Play("sacrifica");
         }
         else
         {
             PlayerPoints.SetPointsToPlayer("Poker", points);
+            audioManager.Play("poker");
         }
         VaiASchermataPunti();
     }
@@ -277,10 +288,12 @@ public class PointsManager : MonoBehaviour
             if (sacrifica)
             {
                 PlayerPoints.SetPointsToPlayer("Doppia");
+                audioManager.Play("sacrifica");
             }
             else
             {
                 PlayerPoints.SetPointsToPlayer("Doppia", points);
+                audioManager.Play("doppia");
             }
         }
         else
@@ -295,11 +308,13 @@ public class PointsManager : MonoBehaviour
                 {
                     PlayerPoints.SetPointsToPlayer("Generala");
                 }
+                audioManager.Play("sacrifica");
             }
             else
             {
                 PlayerPoints.SetPointsToPlayer("Generala", points);
                 currentPlayer.GeneralaFatta = true;
+                audioManager.Play("generala");
             }
         }
         VaiASchermataPunti();

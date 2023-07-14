@@ -13,11 +13,13 @@ public class NamePlayerController : MonoBehaviour
     public GameObject inputBase;
     public GameObject[] inputs;
     public List<string> names;
+    public AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
         selectorObj = GameObject.Find("SelezionaGiocatori");
         SetNumberOfPlayers();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
     public void SetNumberOfPlayers()
     {
@@ -84,6 +86,7 @@ public class NamePlayerController : MonoBehaviour
         }
         PlayerPoints.CreatePlayers(names);
         GameController.contatore = 3;
+        audioManager.Stop("soundtrack");
         SceneManager.LoadScene("Punteggio");
     }
     public void Indietro()

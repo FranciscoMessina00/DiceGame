@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public static bool midTurno = false;
     public PlayerInput inputPlayer;
     UnityEngine.UI.Button bottoneLanciare;
+    public AudioManager audioManager;
     private void Awake()
     {
         inputPlayer = new PlayerInput();
@@ -66,13 +67,20 @@ public class GameController : MonoBehaviour
         mesh.SetText(PlayerPoints.CurrentPlayer().PlayerName + ", tieni premuto per lanciare i dadi");
         Debug.Log(PlayerPoints.CurrentPlayer().PlayerName);
         RecoverFaces();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0) && dadiAbilitati)
+        {
+            audioManager.Play("roll");
+        }
         if (Input.GetMouseButtonUp(0) && dadiAbilitati)
         {
+            audioManager.Stop("roll");
+            audioManager.Play("throw");
             TogliTentativo();
             SaveNumbersArray();
             DisableDice();
