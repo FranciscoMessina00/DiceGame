@@ -79,6 +79,7 @@ public class GameController : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0) && dadiAbilitati)
         {
+            Randomize();
             audioManager.Stop("roll");
             audioManager.Play("throw");
             TogliTentativo();
@@ -135,7 +136,18 @@ public class GameController : MonoBehaviour
         }
         dadiAbilitati = false;
     }
-
+    public void Randomize()
+    {
+        foreach (GameObject dadoObj in dadiArray)
+        {
+            DiceRandomizer randomizer = dadoObj.GetComponent<DiceRandomizer>();
+            if (randomizer.enabled)
+            {
+                Dice dado = dadoObj.GetComponent<Dice>();
+                randomizer.ChangeSprite(dado.RandomFace());
+            }
+        }
+    }
     public void EnableDice()
     {
         testo.SetActive(true);

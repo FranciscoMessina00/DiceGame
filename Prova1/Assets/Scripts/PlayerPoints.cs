@@ -11,6 +11,7 @@ public class PlayerPoints : MonoBehaviour
     public static void CreatePlayers(List<string> names)
     {
         players.Clear();
+        tiriTotali = 0;
         foreach (string name in names)
         {
             Player player = new Player(name);

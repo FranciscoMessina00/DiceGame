@@ -38,7 +38,7 @@ public class PointsVisualizer : MonoBehaviour
             }
             else
             {
-                lanciaDadiNome.text = "Tocca a " + currentPlayer.PlayerName;
+                lanciaDadiNome.text = "Tocca a " + currentPlayer.PlayerName + ". Clicca qui!";
             }
         }
         
