@@ -65,14 +65,17 @@ public class PointsVisualizer : MonoBehaviour
     public void viewDifferentPlayer(int direction)
     {
         indexPlayer += direction;
-        if (indexPlayer >= allPlayers.Count)
+        /*if (indexPlayer >= allPlayers.Count)
         {
             indexPlayer = 0;
         }
         if (indexPlayer < 0 )
         {
             indexPlayer = allPlayers.Count - 1;
-        }
+        }*/
+        
+        // lo traslo della lunghezza della lista per non avere problemi con il modulo di numeri negativi
+        indexPlayer = Mathf.Abs( (indexPlayer + allPlayers.Count) % allPlayers.Count);
         viewPlayerInfo();
     }
     private void viewPlayerInfo()
@@ -80,8 +83,7 @@ public class PointsVisualizer : MonoBehaviour
         TMP_Text playerName = playerNameObject.GetComponent<TMP_Text>();
         TMP_Text points = pointsObj.GetComponent<TMP_Text>();
         playerName.text = allPlayers[indexPlayer].PlayerName;
-        string pointsString = getPointsString(allPlayers[indexPlayer]);
-        points.text = pointsString;
+        points.text = getPointsString(allPlayers[indexPlayer]);
     }
     public void Lancia()
     {

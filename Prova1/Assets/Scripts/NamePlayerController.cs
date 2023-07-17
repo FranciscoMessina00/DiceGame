@@ -36,7 +36,7 @@ public class NamePlayerController : MonoBehaviour
             foreach (GameObject input in inputs)
             {
                 Destroy(input);
-                Debug.Log("distrutto");
+                // Debug.Log("distrutto");
             }
         }
         inputs = new GameObject[n];
@@ -50,13 +50,13 @@ public class NamePlayerController : MonoBehaviour
             inputs[i].SetActive(true);
             inputs[i].transform.localPosition = new Vector3(0, -i * 150, 0);
             inputs[i].name = "Player " + (i + 1);
-            foreach (Transform transform in inputs[i].transform)
+            /*foreach (Transform transform in inputs[i].transform)
             {
                 foreach (Transform children in transform)
                 {
                     Debug.Log(children.name);
                 }
-            }
+            }*/
             GameObject child = inputs[i].transform.Find("Text Area").transform.Find("Placeholder").gameObject;
             TMP_Text mesh = child.GetComponent<TMP_Text>();
             mesh.SetText("Player " + (i + 1));

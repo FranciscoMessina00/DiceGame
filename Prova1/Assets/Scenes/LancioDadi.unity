@@ -1384,7 +1384,7 @@ MonoBehaviour:
   avantiBotton: {fileID: 549986673}
   testo: {fileID: 998384561}
   tentativiRimasti: {fileID: 2075941299}
-  vediPunteggioButton: {fileID: 0}
+  vediPunteggioButton: {fileID: 1471669631}
   audioManager: {fileID: 0}
 --- !u!1 &1471669631
 GameObject:
@@ -1755,7 +1755,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceObject: {fileID: 0}
-  selected: 0
+  dadiArray:
+  - {fileID: 910489384}
+  - {fileID: 1714116172}
+  - {fileID: 11240155}
+  - {fileID: 697514830}
+  - {fileID: 619616803}
+  lanciaBotton: {fileID: 2146640544}
 --- !u!114 &1584800001
 MonoBehaviour:
   m_ObjectHideFlags: 0

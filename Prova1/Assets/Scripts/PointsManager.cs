@@ -75,7 +75,7 @@ public class PointsManager : MonoBehaviour
             {
                 //abilita giocata del numero
                 bmp.SetButtons(i);
-                Debug.Log(numero + " c'è");
+                //Debug.Log(numero + " c'è");
             }
         }
         //check giocate scala, full, poker e generala
@@ -83,26 +83,26 @@ public class PointsManager : MonoBehaviour
         {
             //abilita scala
             bmp.SetButtons(6);
-            Debug.Log("Scala");
+            //Debug.Log("Scala");
         }
         if ( Full() && currentPlayer.points["Full"] == 0 )
         {
             //abilita full
             bmp.SetButtons(7);
-            Debug.Log("Full");
+            //Debug.Log("Full");
         }
         if ( Poker() && currentPlayer.points["Poker"] == 0 )
         {
             //abilita poker
             bmp.SetButtons(8);
-            Debug.Log("Poker");
+            //Debug.Log("Poker");
         }
         if ( Generala() && (currentPlayer.points["Doppia"] == 0 || currentPlayer.points["Generala"] == 0))
         {
             if (currentPlayer.GeneralaFatta)
             {
                 bmp.SetButtons(10);
-                Debug.Log("Doppia");
+                //Debug.Log("Doppia");
             }
             else
             {
@@ -112,18 +112,24 @@ public class PointsManager : MonoBehaviour
                     if (currentPlayer.points["Doppia"] == 0)
                     {
                         bmp.SetButtons(10);
-                        Debug.Log("Doppia");
+                        //Debug.Log("Doppia");
                     }
                     else
                     {
                         bmp.SetButtons(9);
-                        Debug.Log("Generala");
+                        //Debug.Log("Generala");
                     }
                 }
                 else
                 {
                     bmp.SetButtons(9);
-                    Debug.Log("Generala");
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //Debug.Log("Generala");
                 }
                 
             }
@@ -179,7 +185,6 @@ public class PointsManager : MonoBehaviour
     }
     private bool Full()
     {
-        Debug.Log("Entrato dentro full");
         if ( sacrifica || (conteggioNumeri.Contains(2) && conteggioNumeri.Contains(3)) )
         {
             return true;
@@ -191,7 +196,6 @@ public class PointsManager : MonoBehaviour
     }
     private bool Poker()
     {
-        Debug.Log("Entrato dentro poker");
         if ( sacrifica || conteggioNumeri.Contains(4) )
         {
             return true;

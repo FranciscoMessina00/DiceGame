@@ -19,9 +19,9 @@ public class Dice : MonoBehaviour
         this.face = setFace + 1;
         this.nameImage = "Dadi_" + setFace.ToString();
     }
-    public void Selected()
+    public void IsSelected(bool state)
     {
-        selected = true;
+        selected = state;
     }
     public void Deselected()
     {

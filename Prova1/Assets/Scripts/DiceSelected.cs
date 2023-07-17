@@ -11,11 +11,14 @@ public class DiceSelected : MonoBehaviour
     private SpriteRenderer m_renderer;
     private Color colore;
     private PlayerInput input;
-    public bool selected = false;
+    public GameObject[] dadiArray;
+    [SerializeField] private GameObject lanciaBotton;
+    UnityEngine.UI.Button bottoneLanciare;
     private void Awake()
     {
         _mainCamera = Camera.main;
         input = new PlayerInput();
+        bottoneLanciare = lanciaBotton.GetComponent<UnityEngine.UI.Button>();
     }
     public void Start()
     {
@@ -57,12 +60,23 @@ public class DiceSelected : MonoBehaviour
         if (colore.a == 1f)
         {
             colore.a = .5f;
-            dado.Deselected();
+            dado.IsSelected(false);
         } else
         {
             colore.a = 1f;
-            dado.Selected();
+            dado.IsSelected(true);
         }
         diceObject.GetComponent<SpriteRenderer>().color = colore;
+        ControlloBottoneLancia();
+    }
+    public void ControlloBottoneLancia()
+    {
+        bool abilitaLancia = false;
+        foreach (GameObject dadoObj in dadiArray)
+        {
+            Dice dado = dadoObj.GetComponent<Dice>();
+            if (dado.selected) { abilitaLancia = true; }
+        }    
+        bottoneLanciare.interactable = abilitaLancia;
     }
 }
