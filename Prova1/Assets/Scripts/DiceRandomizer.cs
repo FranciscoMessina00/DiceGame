@@ -18,7 +18,7 @@ public class DiceRandomizer : MonoBehaviour
     void Start()
     {
         ChangeSprite(dice.face - 1);
-        StartCoroutine("DoCheck");
+        StartCo();
     }
 
     // Update is called once per frame
@@ -43,5 +43,13 @@ public class DiceRandomizer : MonoBehaviour
             }
             yield return null;
         }
+    }
+    public void StartCo()
+    {
+        StartCoroutine("DoCheck");
+    }
+    public void StopCo()
+    {
+        StopCoroutine("DoCheck");
     }
 }

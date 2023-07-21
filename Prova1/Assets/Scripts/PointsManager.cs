@@ -328,7 +328,6 @@ public class PointsManager : MonoBehaviour
         GameController.midTurno = false;
         GameController.contatore = 3;
         PlayerPoints.NextPlayer();
-        print(currentPlayer);
         SceneManager.LoadScene("Punteggio");
         // vai alla schermata dei punti oppure rilancia i dadi per ora
     }
@@ -339,6 +338,7 @@ public class PointsManager : MonoBehaviour
     }
     public void IndietroSchermata()
     {
+        GameController.midTurno = true;
         SceneManager.LoadScene("LancioDadi");
     }
     public void SwitchPulsantiSacrifica()

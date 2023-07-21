@@ -74,7 +74,8 @@ public class PointsVisualizer : MonoBehaviour
             indexPlayer = allPlayers.Count - 1;
         }*/
         
-        // lo traslo della lunghezza della lista per non avere problemi con il modulo di numeri negativi
+        // lo traslo della lunghezza della lista per non avere problemi con il modulo
+        // di numeri negativi se mi sposto a sinistra con le frecce
         indexPlayer = Mathf.Abs( (indexPlayer + allPlayers.Count) % allPlayers.Count);
         viewPlayerInfo();
     }

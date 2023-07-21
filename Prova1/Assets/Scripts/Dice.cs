@@ -7,7 +7,7 @@ public class Dice : MonoBehaviour
     public int face = 1;
     public string nameImage = "Dadi_0";
     private readonly System.Random rand = new System.Random();
-    public bool selected = false;
+    public bool selected = true;
     public int RandomFace()
     {
         int setFace = rand.Next(0, 6);
@@ -22,9 +22,5 @@ public class Dice : MonoBehaviour
     public void IsSelected(bool state)
     {
         selected = state;
-    }
-    public void Deselected()
-    {
-        selected = false;
     }
 }

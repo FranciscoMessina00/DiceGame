@@ -36,11 +36,8 @@ public class GameController : MonoBehaviour
         inputPlayer = new PlayerInput();
         inputController.GetComponent<DiceSelected>().enabled = false;
         inputPlayer.Disable();
-        lanciaBotton.SetActive(false);
-        avantiBotton.SetActive(false);
+        MostraBottoni(false);
         // vediPunteggioButton = GameObject.Find("Vedi punteggio");
-        vediPunteggioButton.SetActive(false);
-        testo.SetActive(true);
         avanti = false;
         bottoneLanciare = lanciaBotton.GetComponent<UnityEngine.UI.Button>();
         
@@ -48,13 +45,28 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (contatore == 3)
+        {
+            midTurno = false;
+        }
+        else
+        {
+            midTurno = true;
+        }
         TMP_Text mesh = tentativiRimasti.GetComponent<TMP_Text>();
         mesh.SetText( "Tiri rimasti: " + contatore );
         mesh = testo.GetComponent<TMP_Text>();
         mesh.SetText(PlayerPoints.CurrentPlayer().PlayerName + ", tieni premuto per lanciare i dadi");
         // Debug.Log(PlayerPoints.CurrentPlayer().PlayerName);
+        
         if (midTurno)
         {
+            EnableAllDice(false);
+            foreach (GameObject dado in dadiArray)
+            {
+                dado.GetComponent<DiceRandomizer>().enabled = false;
+                Debug.Log("enable false");
+            }
             DisableDice();
             if (contatore != 0)
             {
@@ -69,6 +81,11 @@ public class GameController : MonoBehaviour
             }
             RecoverFaces();
         }
+        else
+        {
+            EnableAllDice(true);
+        }
+        
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
@@ -98,27 +115,24 @@ public class GameController : MonoBehaviour
                 inputController.GetComponent<DiceSelected>().enabled = false;
             }
         }
+        // quando clicco lancia, se non c'è questo if sotto mi lancia i dadi automaticamente perchè
+        // mi prende il fatto che alzo il dito e nel frame successivo mi lancia i dadi questo serve come
+        // separatore tra la pressione del pulsante e l'abilitazione del lancio di dadi
         if (avanti)
         {
             dadiAbilitati = true;
             avanti = false;
         }
-        /*if (!dadiAbilitati)
-        {
-            ControlloBottoneLancia();
-        }*/
     }
 
     public void DisableDice()
     {
-        lanciaBotton.SetActive(true);
-        avantiBotton.SetActive(true);
-        vediPunteggioButton.SetActive(true);
-        testo.SetActive(false);
+        MostraBottoni(true);
         bottoneLanciare.interactable = false;
         foreach (GameObject dado in dadiArray)
         {
-            dado.GetComponent<DiceRandomizer>().enabled = false;
+            dado.GetComponent<DiceRandomizer>().StopCo();
+            Debug.Log("STOPPED COROUTINE");
             m_renderer = dado.GetComponent<SpriteRenderer>();
             colore = m_renderer.color;
             colore.a = contatore != 0 ? .5f : 1f;
@@ -132,19 +146,16 @@ public class GameController : MonoBehaviour
         foreach (GameObject dadoObj in dadiArray)
         {
             DiceRandomizer randomizer = dadoObj.GetComponent<DiceRandomizer>();
-            if (randomizer.enabled)
+            Dice dado = dadoObj.GetComponent<Dice>();
+            if (dado.selected)
             {
-                Dice dado = dadoObj.GetComponent<Dice>();
                 randomizer.ChangeSprite(dado.RandomFace());
             }
         }
     }
     public void EnableDice()
     {
-        testo.SetActive(true);
-        lanciaBotton.SetActive(false);
-        avantiBotton.SetActive(false);
-        vediPunteggioButton.SetActive(false);
+        MostraBottoni(false);
         //bottoneLanciare.interactable = true;
         Dice dado;
         foreach (GameObject dadoObj in dadiArray)
@@ -153,6 +164,7 @@ public class GameController : MonoBehaviour
             if (dado.selected)
             {
                 dadoObj.GetComponent<DiceRandomizer>().enabled = true;
+                dadoObj.GetComponent<DiceRandomizer>().StartCo();
             }
         }
         inputPlayer.Disable();
@@ -170,10 +182,6 @@ public class GameController : MonoBehaviour
     }
     public void NextScene()
     {
-        if (contatore != 0)
-        {
-            midTurno = true;
-        }
         SceneManager.LoadScene("SceltaPunteggio");
     }
     public void TogliTentativo()
@@ -181,6 +189,7 @@ public class GameController : MonoBehaviour
         contatore--;
         TMP_Text mesh = tentativiRimasti.GetComponent<TMP_Text>();
         mesh.SetText("Tiri rimasti: " + contatore);
+        midTurno = true;
     }
     /*public void ControlloBottoneLancia()
     {
@@ -199,16 +208,21 @@ public class GameController : MonoBehaviour
             bottoneLanciare.interactable = false;
         }
     }*/
+    public void MostraBottoni(bool mostra)
+    {
+        testo.SetActive(!mostra);
+        lanciaBotton.SetActive(mostra);
+        avantiBotton.SetActive(mostra);
+        vediPunteggioButton.SetActive(mostra);
+    }
     public void VediPunteggio()
     {
-        midTurno = true;
         SceneManager.LoadScene("Punteggio");
     }
     private void RecoverFaces()
     {
         DiceRandomizer diceRandomizer;
         Dice dadoFaccia;
-        midTurno = false;
         string dadoName;
         for (int i = 1; i <= 5; i++)
         {
@@ -219,6 +233,14 @@ public class GameController : MonoBehaviour
             diceRandomizer.ChangeSprite(numeri[i - 1] - 1);
             dadoFaccia = dado.GetComponent<Dice>();
             dadoFaccia.SetParam(numeri[i - 1] - 1);
+        }
+    }
+    public void EnableAllDice(bool enable)
+    {
+        foreach (GameObject dadoObj in dadiArray)
+        {
+            Dice dado = dadoObj.GetComponent<Dice>();
+            dado.IsSelected(enable);
         }
     }
 }
