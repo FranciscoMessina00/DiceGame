@@ -7,23 +7,26 @@ public class DiceRandomizer : MonoBehaviour
     public Dice dice;
     public SpriteRenderer spriteRenderer;
     public Sprite[] spriteArray;
-
+    private IEnumerator coroutine;
+    Coroutine co;
     private void Awake()
     {
+        coroutine = DoCheck();
         dice = gameObject.GetComponent<Dice>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        StartCo();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         ChangeSprite(dice.face - 1);
-        StartCo();
     }
 
     // Update is called once per frame
     //void Update()
     //{
+    //    coroutine = DoCheck();
     //}
     public void ChangeSprite(int number)
     {
@@ -46,10 +49,12 @@ public class DiceRandomizer : MonoBehaviour
     }
     public void StartCo()
     {
-        StartCoroutine("DoCheck");
+        co = StartCoroutine(coroutine);
+        Debug.Log("Iniziooooo");
     }
     public void StopCo()
     {
-        StopCoroutine("DoCheck");
+        StopCoroutine(co);
+        Debug.Log("Finitoooo");
     }
 }

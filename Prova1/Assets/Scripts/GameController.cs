@@ -45,14 +45,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (contatore == 3)
-        {
-            midTurno = false;
-        }
-        else
-        {
-            midTurno = true;
-        }
+        midTurno = contatore != 3;
         TMP_Text mesh = tentativiRimasti.GetComponent<TMP_Text>();
         mesh.SetText( "Tiri rimasti: " + contatore );
         mesh = testo.GetComponent<TMP_Text>();
@@ -64,7 +57,8 @@ public class GameController : MonoBehaviour
             EnableAllDice(false);
             foreach (GameObject dado in dadiArray)
             {
-                dado.GetComponent<DiceRandomizer>().enabled = false;
+                //dado.GetComponent<DiceRandomizer>().enabled = false;
+                dado.GetComponent<DiceRandomizer>().StopCo();
                 Debug.Log("enable false");
             }
             DisableDice();
@@ -163,7 +157,7 @@ public class GameController : MonoBehaviour
             dado = dadoObj.GetComponent<Dice>();
             if (dado.selected)
             {
-                dadoObj.GetComponent<DiceRandomizer>().enabled = true;
+                //dadoObj.GetComponent<DiceRandomizer>().enabled = true;
                 dadoObj.GetComponent<DiceRandomizer>().StartCo();
             }
         }
